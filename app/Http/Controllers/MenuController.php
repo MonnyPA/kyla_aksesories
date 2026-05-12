@@ -81,6 +81,7 @@ class MenuController extends Controller
     public function updateCart(Request $request)
     {
         $productId = $request->input('id');
+        $product = Product::find($productId);
         $newQty = $request->input('qty');
 
         if($newQty <= 0)
@@ -95,7 +96,7 @@ class MenuController extends Controller
             {
                 $cart[$productId]['qty'] = $newQty;
                 Session::put('cart', $cart);
-                Session::flash('success', 'Jumlah Item berhasil diperbaharui');
+                Session::flash('success', 'Jumlah Product ' . $product->name . ' berhasil diperbaharui');
 
                 return response()->json([
                     'success' => true
@@ -106,6 +107,7 @@ class MenuController extends Controller
     public function removeCart(Request $request)
     {
         $productId = $request->input('id');
+        $product = Product::find($productId);
 
         $cart = Session::get('cart');
 
@@ -113,7 +115,7 @@ class MenuController extends Controller
             {
                 unset($cart[$productId]);
                 Session::put('cart', $cart);
-                Session::flash('success', 'Item Berhasil dikeluarkan dari keranjang atau dihapus');
+                Session::flash('success', 'Product ' . $product->name . ' Berhasil dikeluarkan dari keranjang atau dihapus');
 
                 return response()->json([
                     'success' => true

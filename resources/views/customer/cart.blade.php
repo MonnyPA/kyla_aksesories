@@ -57,13 +57,13 @@
                                 <td>
                                     <div class="input-group quantity mt-4" style="width: 100px;">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
+                                            <button class="btn btn-sm btn-minus rounded-circle bg-light border" onclick="updateQuantity('{{ $product['id'] }}', -1)" >
                                             <i class="fa fa-minus"></i>
                                             </button>
                                         </div>
-                                        <input type="text" class="form-control form-control-sm text-center border-0" value="1">
+                                        <input id="qty-{{ $product['id'] }}" type="text" class="form-control form-control-sm text-center border-0" value="{{ $product['qty'] }}">
                                         <div class="input-group-btn">
-                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                            <button class="btn btn-sm btn-plus rounded-circle bg-light border" onclick="updateQuantity('{{ $product['id'] }}', 1)">
                                                 <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
@@ -73,7 +73,7 @@
                                     <p class="mb-0 mt-4">{{ 'Rp. '. number_format($product['selling_price'] * $product['qty'], 0, '.','.') }}</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-md rounded-circle bg-light border mt-4" >
+                                    <button class="btn btn-md rounded-circle bg-light border mt-3" onclick="if(confirm('Apakah Anda yakin ingin menghapus Product {{ $product['name'] }} ini?')) { removeItemFromCart('{{ $product['id'] }}') }" >
                                         <i class="fa fa-times text-danger"></i>
                                     </button>
                                 </td>
@@ -172,16 +172,16 @@
                 });
         }
 
-        function removeItemFromCart(itemId)
+        function removeItemFromCart(productId)
         {
             fetch("{{ route('cart.remove') }}",
                 {
                     method: 'POST',
                     headers: {
-                        'content-type': 'aplication/json',
+                        'content-type': 'application/json',
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
-                    body: JSON.stringify({id: productId})
+                    body: JSON.stringify({ id: productId })
                 })
                 .then(response => response.json())
                 // console.log('Response:', response);
