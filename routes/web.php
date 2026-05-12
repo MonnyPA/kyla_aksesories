@@ -1,16 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MenuController;
 
 //Route Customer
 
 Route::get('/', function () {
-    return view('customer.menu');
-});
+    return redirect()->route('product');});
 
-Route::get('/cart', function () {
-    return view('customer.cart');
-})->name('cart');
+Route::get('/product', [MenuController::class, 'index'])->name('product');
+Route::get('/cart', [MenuController::class, 'cart'])->name('cart');
+
+Route::post('/cart/add', [MenuController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [MenuController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/remove', [MenuController::class, 'removeCart'])->name('cart.remove');
+Route::get('/cart/clear', [MenuController::class, 'clearCart'])->name('cart.clear');
 
 Route::get('/checkout', function () {
     return view('customer.checkout');

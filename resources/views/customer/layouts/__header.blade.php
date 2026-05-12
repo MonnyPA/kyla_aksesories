@@ -4,6 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title>Kyla Aksesories</title>
+        <link rel="icon" type="image/png" href="{{ asset('assets/customer/img/kyla.png') }}">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
