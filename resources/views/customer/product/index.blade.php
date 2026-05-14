@@ -27,6 +27,7 @@
                                             <th class="text-center">Nama</th>
                                             <th class="text-center">Harga Modal</th>
                                             <th class="text-center">Harga Jual</th>
+                                            <th class="text-center">Stock</th>
                                             <th class="text-center">Status</th>
                                             <th class="text-center">Action</th>
                                         </tr>
@@ -42,9 +43,23 @@
                                             <td class="text-center align-middle">{{ $product->name }}</td>
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($product->cost_price), 0, ',','.' }}</td>
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($product->selling_price), 0, ',','.' }}</td>
+                                            <td class="text-center align-middle">{{ $product->stock }} Pcs</td>
                                             <td class="text-center align-middle">
-                                                <span class="badge {{ $product->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $product->is_active ? 'Active' : 'Non Active' }}
+                                                <span class="badge
+                                                    {{
+                                                        $product->stock <= 0
+                                                        ? 'bg-danger'
+                                                        : ($product->is_active
+                                                            ? 'bg-success'
+                                                            : 'bg-secondary')
+                                                    }}">
+                                                    {{
+                                                        $product->stock <= 0
+                                                        ? 'Out of Stock'
+                                                        : ($product->is_active
+                                                            ? 'Active'
+                                                            : 'Non Active')
+                                                    }}
                                                 </span>
                                             </td>
                                             <td class="text-center align-middle">

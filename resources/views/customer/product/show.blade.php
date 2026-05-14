@@ -54,8 +54,21 @@
                                     <label for="category_id" class="form-label"
                                         ><i>Status :</i></label>
                                     <p>
-                                        <span class="badge {{ $product->is_active ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $product->is_active ? 'Active' : 'Non Active' }}
+                                        <span class="badge
+                                            {{
+                                                $product->stock <= 0
+                                                ? 'bg-danger'
+                                                : ($product->is_active
+                                                    ? 'bg-success'
+                                                    : 'bg-secondary')
+                                            }}">
+                                            {{
+                                                $product->stock <= 0
+                                                ? 'Out of Stock'
+                                                : ($product->is_active
+                                                    ? 'Active'
+                                                    : 'Non Active')
+                                            }}
                                         </span>
                                     </p>
                                     </div>

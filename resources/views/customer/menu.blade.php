@@ -55,6 +55,26 @@
                                     @endforeach
                                     </tbody>
                                 </table> --}}
+                                <div class="row mb-4">
+                                    <div class="col-md-6 mx-auto">
+                                        <form action="{{ route('listproduct') }}" method="GET">
+                                            <div class="input-group">
+                                                <input
+                                                    type="text"
+                                                    name="search"
+                                                    class="form-control"
+                                                    placeholder="Cari product..."
+                                                    value="{{ request('search') }}">
+                                                <button
+                                                    class="btn btn-primary"
+                                                    type="submit">
+
+                                                    <i class="fa fa-search"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
 
                                     @foreach($products as $product)
                                     <div class="col-md-6 col-lg-6 col-xl-4">

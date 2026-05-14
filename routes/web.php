@@ -3,13 +3,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CategoryController;
 
 //Route Customer
 
 Route::get('/', function () {
     return redirect()->route('product');});
 
-Route::get('/listproduct', [MenuController::class, 'index'])->name('product');
+Route::get('/listproduct', [MenuController::class, 'index'])->name('listproduct');
 Route::get('/cart', [MenuController::class, 'cart'])->name('cart');
 
 Route::post('/cart/add', [MenuController::class, 'addToCart'])->name('cart.add');
@@ -25,3 +27,7 @@ Route::post('/checkout/store', [MenuController::class, 'storeOrder'])->name('che
 Route::resource('products', ProductController::class);
 Route::get('/products/active/{id}', [ProductController::class, 'markAsActive'])->name('products.active');
 Route::get('/products/nonactive/{id}', [ProductController::class, 'markAsNonactive'])->name('products.nonactive');
+
+Route::resource('orders', OrderController::class);
+
+Route::resource('categories', CategoryController::class);

@@ -13,18 +13,30 @@ use Illuminate\Support\Facades\Validator;
 
 class MenuController extends Controller
 {
-    public function index()
-        {
-            $userId = auth()->id();
+    public function index(Request $request)
+    {
+        $search = $request->search;
+        $products = Product::with('category')
 
-            Session::put('user_id', $userId);
+                ->where('is_active', 1)
+                ->when($search, function($query) use ($search)
+                {
+                    $query->where('name', 'like', '%'.$search.'%')
+                        ->orWhereHas('category', function($q) use ($search)
+                        {
+                            $q->where(
+                                'cat_name',
+                                'like',
+                                '%'.$search.'%'
+                            );
+                        });
+                })
+            ->latest()
+            ->get();
 
-            $products = Product::where('is_active', 1)
-                ->orderBy('name', 'asc')
-                ->get();
-
-            return view('customer.menu', compact('products', 'userId'));
-        }
+        return view('customer.menu',
+            compact('products'));
+    }
 
     //Keranjang
     public function cart()
@@ -176,7 +188,7 @@ class MenuController extends Controller
         $user = Auth::user();
 
         $order = Order::create([
-            'order_code' => 'ORD -'. time(),
+            'order_code' => 'TRK-' . date('dmY') . '-' . time(),
             'user_id' => Auth()->id(),
             'total' => $totalAmount,
             'profit' => $totalProfit,
@@ -197,11 +209,14 @@ class MenuController extends Controller
                 ]);
 
 
-                if($dbProduct)
+                $dbProduct->stock -= $product['qty'];
+
+                if($dbProduct->stock <= 0)
                 {
-                    $dbProduct->stock -= $product['qty'];
-                    $dbProduct->save();
+                    $dbProduct->is_active = 0;
                 }
+
+                $dbProduct->save();
 
             }
 
