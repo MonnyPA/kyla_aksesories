@@ -46,6 +46,11 @@
     <script>
         document.getElementById('currentYear').textContent = new Date().getFullYear();
     </script>
+
+    <!-- Data Table -->
+    <script src="{{ asset('assets/customer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
+    <script src="{{ asset('assets/customer/assets/static/js/pages/simple-datatables.js') }}"></script>
+
     @yield('script')
     </body>
 </html>

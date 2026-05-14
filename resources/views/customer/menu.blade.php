@@ -1,4 +1,5 @@
 @extends('customer.layouts.master')
+@section('title', 'Penjualan Product')
 
 @section('content')
 <div class="container-fluid fruite py-5">
@@ -8,6 +9,13 @@
                         <div class="row g-3">
                             <div class="col-lg">
                                 <div class="row g-4 justify-content-center">
+
+                                    @if(session('success'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('success') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
+                                        </div>
+                                    @endif
 
                                 {{-- <table class="table table-striped" id="table1">
                                     <thead>
@@ -52,7 +60,8 @@
                                     <div class="col-md-6 col-lg-6 col-xl-4">
                                         <div class="rounded position-relative fruite-item">
                                             <div class="fruite-img">
-                                                <img src="{{ $product->img }}" class="img-fluid w-100 rounded-top" alt="">
+                                                <img src="{{ asset('img_product_upload/' . $product->img) }}" alt="{{ $product->name }}" class="img-fluid w-100 rounded-top" onerror="this.onerror=null;this.src='{{ $product->img }}';">
+                                                <img src="{{ asset('img_product_upload/' . $product->img) }}" class="img-fluid w-100 rounded-top" alt="">
                                             </div>
                                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute
                                             @if($product->category->cat_name == "Jeday")

@@ -15,7 +15,6 @@ class Product extends Model
         'description',
         'cost_price',
         'selling_price',
-        'profit',
         'stock',
         'category_id',
         'img',

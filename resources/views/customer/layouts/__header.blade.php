@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Kyla Aksesories</title>
+        <title>@yield('title') | Kyla Aksesories</title>
         <link rel="icon" type="image/png" href="{{ asset('assets/customer/img/kyla.png') }}">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
@@ -28,4 +28,14 @@
 
         <!-- Template Stylesheet -->
         <link href="{{ asset('assets/customer/css/style.css') }}" rel="stylesheet">
+
+        <link
+            rel="stylesheet"
+            href="{{ asset('assets/customer/assets/extensions/simple-datatables/style.css') }}"
+        />
+
+        <link
+            rel="stylesheet"
+            href="{{ asset('assets/customer/assets/compiled/css/table-datatable.css') }}"
+        />
     </head>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -63,6 +64,7 @@ class MenuController extends Controller
                     'id' => $product->id,
                     'name' => $product->name,
                     'selling_price' => $product->selling_price,
+                    'cost_price' => $product->cost_price,
                     'img' => $product->img,
                     'qty' => 1
                 ];
@@ -128,5 +130,128 @@ class MenuController extends Controller
         Session::forget('cart');
         return redirect()->route('cart')->with('success', 'Keranjang Berhasil dikosongkan');
     }
+
+    // Checkout
+    public function checkout()
+    {
+        $cart = Session::get('cart');
+
+        if(empty($cart))
+            {
+                return redirect()->route('cart')->with('error', 'Keranjang Masih Kosong');
+            }
+
+        $user = Auth::user();
+
+        return view('customer.checkout', compact('cart','user'));
+    }
+
+    // Checkout
+    public function storeOrder(Request $request)
+    {
+        $cart = Session::get('cart');
+        // $user = Session::get('user');
+
+        if(empty($cart))
+            {
+                return redirect()->route('cart')->with('error', 'Keranjang Masih Kosong');
+            }
+
+        $totalProfit = 0;
+        $totalAmount = 0;
+        foreach($cart as $product)
+            {
+                $totalAmount += $product['selling_price'] * $product['qty'];
+                $totalProfit += ($product['selling_price']-$product['cost_price']) * $product['qty'];
+
+                $productDetails[] = [
+                    'id' => $product['id'],
+                    'cost_price' => (int) $product['cost_price'],
+                    'selling_price' => (int) $product['selling_price'],
+                    'quantity' => $product['qty'],
+                    'name' => substr($product['name'], 0, 50)
+                ];
+            }
+
+        $user = Auth::user();
+
+        $order = Order::create([
+            'order_code' => 'ORD -'. time(),
+            'user_id' => Auth()->id(),
+            'total' => $totalAmount,
+            'profit' => $totalProfit,
+            'status_pembayaran' => 'pending',
+            'payment_method' => $request->payment_method,
+            'note' => $request->note
+        ]);
+
+        foreach($cart as $productId => $product)
+            {
+                $dbProduct = Product::find($product['id']);
+
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product['id'],
+                    'quantity' => $product['qty'],
+                    'total_price' => $product['selling_price'] * $product['qty']
+                ]);
+
+
+                if($dbProduct)
+                {
+                    $dbProduct->stock -= $product['qty'];
+                    $dbProduct->save();
+                }
+
+            }
+
+        Session::forget('cart');
+
+        return redirect()->route('product')->with('success', 'Transaksi Berhasil disimpan');
+
+        // if($request->payment_method == 'tunai')
+        //     {
+        //         return redirect()->route('checkout.success', ['orderId' => $order->order_code])->with('success', 'Pesanan Berhasil dibuat');
+        //     }
+            // {
+            //     \Midtrans\Config::$serverKey = config('midtrans.server_key');
+            //     \Midtrans\Config::$isProduction = config('midtrans.is_production');
+            //     \Midtrans\Config::$isSanitized = true;
+            //     \Midtrans\Config::$is3ds = true;
+
+            //     $parans =
+            //         [
+            //             'transaction_details' => [
+            //                 'order_id' => $order->order_code,
+            //                 'gross_amount' => (int) $order->grand_total
+            //             ],
+            //             'item_details' => $itemDetails,
+            //             'customer_details' => [
+            //                 'first_name' => $user->fullname ?? 'Guest',
+            //                 'phone' => $user->phone
+            //             ],
+            //             'payment_type' => ['qris'],
+            //         ];
+
+            //         try
+            //             {
+            //                 $snapToken = \Midtrans\Snap::getSnapToken($parans);
+            //                 return response()->json([
+            //                     'success' => 'success',
+            //                     'snap_token' => $snapToken,
+            //                     'order_code' => $order->order_code
+            //                 ]);
+
+            //             } catch (\Exception $e)
+            //             {
+            //                 return response()->json([
+            //                     'success' => 'error',
+            //                     'message' => 'Gagal Memproses Pembayaran: ' . $e->getMessage() .  ' Silahkan Coba lagi'
+            //                 ]);
+            //             }
+            // }
+    }
+
+
 }
 

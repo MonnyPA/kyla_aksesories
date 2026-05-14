@@ -2,13 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ProductController;
 
 //Route Customer
 
 Route::get('/', function () {
     return redirect()->route('product');});
 
-Route::get('/product', [MenuController::class, 'index'])->name('product');
+Route::get('/listproduct', [MenuController::class, 'index'])->name('product');
 Route::get('/cart', [MenuController::class, 'cart'])->name('cart');
 
 Route::post('/cart/add', [MenuController::class, 'addToCart'])->name('cart.add');
@@ -16,6 +17,11 @@ Route::post('/cart/update', [MenuController::class, 'updateCart'])->name('cart.u
 Route::post('/cart/remove', [MenuController::class, 'removeCart'])->name('cart.remove');
 Route::get('/cart/clear', [MenuController::class, 'clearCart'])->name('cart.clear');
 
-Route::get('/checkout', function () {
-    return view('customer.checkout');
-})->name('checkout');
+Route::get('/checkout', [MenuController::class, 'checkout'])->name('checkout');
+Route::post('/checkout/store', [MenuController::class, 'storeOrder'])->name('checkout.store');
+
+// Admin
+
+Route::resource('products', ProductController::class);
+Route::get('/products/active/{id}', [ProductController::class, 'markAsActive'])->name('products.active');
+Route::get('/products/nonactive/{id}', [ProductController::class, 'markAsNonactive'])->name('products.nonactive');

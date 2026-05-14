@@ -13,6 +13,7 @@ class Order extends Model
         'order_code',
         'user_id',
         'total',
+        'profit',
         'status_pembayaran',
         'payment_method',
         'note',

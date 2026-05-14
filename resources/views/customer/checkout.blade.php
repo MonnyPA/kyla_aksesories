@@ -5,19 +5,26 @@
 <div class="container-fluid py-5">
             <div class="container py-5">
                 <h1 class="mb-4">Detail Pembayaran</h1>
-                <form action="#">
+                 <form id="checkout-form" action="{{ route('checkout.store') }}" method="POST">
+                    @csrf
                     <div class="row g-5">
                         <div class="col-md-12 col-lg-6 col-xl-6">
                             <div class="row">
-                                <div class="col-md-12 col-lg-6">
+                                <div class="col-md-12 col-lg-4">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">Nama Lengkap<sup>*</sup></label>
-                                        <input type="text" class="form-control" disabled required>
+                                        <label class="form-label my-3">Nama Lengkap</label>
+                                        <input type="text" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-md-12 col-lg-6">
+                                <div class="col-md-12 col-lg-4">
                                     <div class="form-item w-100">
-                                        <label class="form-label my-3">Nomor WhatsApp<sup>*</sup></label>
+                                        <label class="form-label my-3">Nomor WhatsApp</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-lg-4">
+                                    <div class="form-item w-100">
+                                        <label class="form-label my-3">Casier<sup>*</sup></label>
                                         <input type="text" class="form-control" disabled required>
                                     </div>
                                 </div>
@@ -55,29 +62,6 @@
                                                 <td class="py-5">Rp25.000,00</td>
                                                 <td class="py-5">1</td>
                                                 <td class="py-5">Rp25.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="d-flex align-items-center mt-2">
-                                                        <img src="https://images.unsplash.com/photo-1543392765-620e968d2162?q=80&w=1987&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA==" class="img-fluid rounded-circle" style="width: 100px; height: 90px; object-fit: cover;" alt="">
-                                                    </div>
-                                                </th>
-                                                <td class="py-5">Beef Burger</td>
-                                                <td class="py-5">Rp40.000,00</td>
-                                                <td class="py-5">1</td>
-                                                <td class="py-5">Rp40.000,00</td>
-                                            </tr>
-                                            <tr>
-                                                <th scope="row">
-                                                    <div class="d-flex align-items-center mt-2">
-                                                        <img src="https://images.unsplash.com/photo-1579954115545-a95591f28bfc" class="img-fluid rounded-circle" style="width: 100px; height: 90px; object-fit: cover;" alt="">
-                                                    </div>
-                                                </th>
-                                                <td class="py-5">Big Banana</td>
-                                                <td class="py-5">Rp20.000,00</td>
-                                                <td class="py-5">1</td>
-                                                <td class="py-5">Rp20.000,00</td>
-                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -132,4 +116,64 @@
                 </form>
             </div>
         </div>
+
+<script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('midtrans.client_key') }}"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const payButton = document.getElementById('pay-button');
+                const form = document.querySelector('form');
+
+
+                payButton.addEventListener('click', function() {
+                    let paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+
+                    if (!paymentMethod) {
+                        alert('Silakan pilih metode pembayaran terlebih dahulu.');
+                        return;
+                    }
+
+                    paymentMethod = paymentMethod.value;
+
+                    let formData = new FormData(form);
+
+                    if(paymentMethod == 'tunai')
+                    {
+                        form.submit();
+                    } else
+                    {
+                        fetch("{{ route('checkout.store') }}", {
+                            method: "POST",
+                            body: formData,
+                            headers:
+                            {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json',
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.snap_token) {
+                                snap.pay(data.snap_token, {
+                                    onSuccess: function(result) {
+                                        window.location.href = "/checkout/success/" + data.order_code;
+                                    },
+                                    onPending: function(result) {
+                                        alert('Menunggu konfirmasi pembayaran. Silakan selesaikan pembayaran Anda.');
+                                    },
+                                    onError: function(result) {
+                                        alert('Pembayaran Gagal. Silakan coba lagi.');
+                                    }
+                                });
+                            } else {
+                                alert('Terjadi Kesalahan. Silakan coba lagi.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Terjadi kesalahan. Silakan coba lagi.');
+                        });
+                    }
+                })
+            })
+        </script>
 @endsection
