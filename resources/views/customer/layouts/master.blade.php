@@ -51,6 +51,9 @@
     <script src="{{ asset('assets/customer/assets/extensions/simple-datatables/umd/simple-datatables.js') }}"></script>
     <script src="{{ asset('assets/customer/assets/static/js/pages/simple-datatables.js') }}"></script>
 
+    <!-- Untuk Alert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     @yield('script')
     </body>
 </html>

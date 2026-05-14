@@ -11,8 +11,9 @@
                             <a href="{{ route('listproduct') }}" class="nav-item nav-link {{ request()->routeIs('listproduct') ? 'active' : '' }}">Product</a>
                             <a href="{{ route('orders.index') }}" class="nav-item nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">Daftar Pesanan</a>
                             <a href="{{ route('products.index') }}" class="nav-item nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}">Kelola Product</a>
-                            <a href="#" class="nav-item nav-link">Kelola Category</a>
-                            <a href="#" class="nav-item nav-link">Kelola Role</a>
+                            <a href="{{ route('categories.index') }}" class="nav-item nav-link {{ request()->routeIs('categories.*') ? 'active' : '' }}">Kelola Category</a>
+                            <a href="{{ route('roles.index') }}" class="nav-item nav-link {{ request()->routeIs('roles.*') ? 'active' : '' }}">Kelola Role</a>
+                            <a href="#" class="nav-item nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">Kelola User</a>
                         </div>
                         <div class="d-flex m-3 me-0">
                             <a href="{{ route('cart') }}" class="position-relative me-4 my-auto">

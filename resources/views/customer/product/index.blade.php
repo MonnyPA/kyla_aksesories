@@ -66,9 +66,25 @@
                                                 <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> View</a>
                                                 {{-- @if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'direktur' || Auth::user()->role->role_name == 'owner' || Auth::user()->role->role_name == 'manager') --}}
                                                 @if ($product->is_active)
-                                                    <a href="{{ route('products.nonactive', $product->id) }}" class="btn btn-info btn-sm" onclick="return confirm('Are you sure you want to Non Active this Product  {{ $product->name }}?')"><i class="bi bi-x-circle"></i> Non Active</a>
+                                                    <a href="#"
+                                                        class="btn btn-Danger btn-sm"
+                                                        onclick="confirmNonAktif(
+                                                                '{{ route('products.nonactive', $product->id) }}',
+                                                                '{{ $product->name }}'
+                                                        )">
+                                                            <i class="bi bi-x-circle"></i>
+                                                            Non Active
+                                                    </a>
                                                 @else
-                                                    <a href="{{ route('products.active', $product->id) }}" class="btn btn-success btn-sm" onclick="return confirm('Are you sure you want to Active this Product  {{ $product->name }}?')"><i class="bi bi-check-circle"></i> Active</a>
+                                                    <a href="#"
+                                                        class="btn btn-success btn-sm"
+                                                        onclick="confirmAktif(
+                                                                '{{ route('products.active', $product->id) }}',
+                                                                '{{ $product->name }}'
+                                                        )">
+                                                            <i class="bi bi-x-circle"></i>
+                                                            Active
+                                                    </a>
                                                 @endif
                                                 <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                                                 {{-- @endif --}}
@@ -84,3 +100,55 @@
 
         </div>
 @endsection
+
+<script>
+
+    function confirmNonAktif(url, productName)
+    {
+        Swal.fire({
+            title:
+                'Non-Aktifkan Product ' +
+                productName,
+
+            text: 'Anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Non-Aktifkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+
+            if(result.isConfirmed)
+            {
+                window.location.href = url;
+            }
+
+        });
+    }
+
+    function confirmAktif(url, productName)
+    {
+        Swal.fire({
+            title:
+                'Aktifkan Product ' +
+                productName,
+
+            text: 'Anda yakin?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, Aktifkan',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+
+            if(result.isConfirmed)
+            {
+                window.location.href = url;
+            }
+
+        });
+    }
+
+</script>
