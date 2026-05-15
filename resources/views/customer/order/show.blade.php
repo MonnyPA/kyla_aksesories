@@ -34,7 +34,7 @@
                                     </div>
                                 <div class="row">
                                 <div class="col-12 d-flex justify-content-end">
-                                    <a href="{{ route('orders.index') }}" class="btn btn-secondary ms-2">Kembali</a>
+                                    <a href="{{ route('orders.index') }}" class="btn btn-info ms-2">Kembali</a>
                                 </div>
                                 </div>
                             </div>

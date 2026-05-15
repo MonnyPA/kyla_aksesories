@@ -8,7 +8,7 @@ use App\Models\OrderItem;
 
 class OrderController extends Controller
 {
-     public function index()
+    public function index()
     {
         $orders = Order::all()->sortByDesc('created_at');
         return view('customer.order.index', compact('orders'));

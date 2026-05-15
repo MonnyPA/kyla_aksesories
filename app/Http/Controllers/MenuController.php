@@ -226,7 +226,7 @@ class MenuController extends Controller
 
         Session::forget('cart');
 
-        return redirect()->route('product')->with('success', 'Transaksi Berhasil disimpan');
+        return redirect()->route('listproduct')->with('success', 'Transaksi Berhasil disimpan');
 
         // if($request->payment_method == 'tunai')
         //     {
