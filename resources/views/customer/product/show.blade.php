@@ -85,9 +85,25 @@
                                 <div class="row">
                                 <div class="col-12 d-flex justify-content-end">
                                     @if ($product->is_active)
-                                        <a href="{{ route('products.nonactive', $product->id) }}" class="btn btn-info ms-2" onclick="return confirm('Are you sure you want to Non Active this Product  {{ $product->name }}?')">Non Active</a>
+                                        <a href="#"
+                                            class="btn btn-danger ms-2"
+                                            onclick="confirmNonAktif(
+                                                    '{{ route('products.nonactive', $product->id) }}',
+                                                    '{{ $product->name }}'
+                                            )">
+                                                <i class="bi bi-x-circle"></i>
+                                                Non Active
+                                        </a>
                                     @else
-                                        <a href="{{ route('products.active', $product->id) }}" class="btn btn-success ms-2" onclick="return confirm('Are you sure you want to Active this Product  {{ $product->name }}?')">Active</a>
+                                        <a href="#"
+                                            class="btn btn-success ms-2"
+                                            onclick="confirmAktif(
+                                                    '{{ route('products.active', $product->id) }}',
+                                                    '{{ $product->name }}'
+                                            )">
+                                                <i class="bi bi-x-circle"></i>
+                                                Active
+                                        </a>
                                     @endif
                                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning ms-2">Edit</a>
                                     <a href="{{ route('products.index') }}" class="btn btn-secondary ms-2">Kembali</a>

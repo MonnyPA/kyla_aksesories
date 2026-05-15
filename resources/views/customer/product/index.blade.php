@@ -9,12 +9,6 @@
                 <section class="section">
                         <div class="card">
                             <div class="card-body">
-                                @if(session('success'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert"">
-                                        <p><i class="bi bi-check-circle-fill"> {{ session('success') }}</i></p>
-                                        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" style="font-size: 0.7rem;"></button>
-                                    </div>
-                                @endif
                                 <div class="">
                                     <a href="{{ route('products.create') }}" class="btn btn-primary mb-3 ms-auto">New Product</a>
                                 </div>
@@ -67,7 +61,7 @@
                                                 {{-- @if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'direktur' || Auth::user()->role->role_name == 'owner' || Auth::user()->role->role_name == 'manager') --}}
                                                 @if ($product->is_active)
                                                     <a href="#"
-                                                        class="btn btn-Danger btn-sm"
+                                                        class="btn btn-danger btn-sm"
                                                         onclick="confirmNonAktif(
                                                                 '{{ route('products.nonactive', $product->id) }}',
                                                                 '{{ $product->name }}'
@@ -101,54 +95,5 @@
         </div>
 @endsection
 
-<script>
 
-    function confirmNonAktif(url, productName)
-    {
-        Swal.fire({
-            title:
-                'Non-Aktifkan Product ' +
-                productName,
 
-            text: 'Anda yakin?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, Non-Aktifkan',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-
-            if(result.isConfirmed)
-            {
-                window.location.href = url;
-            }
-
-        });
-    }
-
-    function confirmAktif(url, productName)
-    {
-        Swal.fire({
-            title:
-                'Aktifkan Product ' +
-                productName,
-
-            text: 'Anda yakin?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#28a745',
-            cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, Aktifkan',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-
-            if(result.isConfirmed)
-            {
-                window.location.href = url;
-            }
-
-        });
-    }
-
-</script>

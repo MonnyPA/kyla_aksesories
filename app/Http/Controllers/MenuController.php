@@ -132,15 +132,19 @@ class MenuController extends Controller
                 Session::flash('success', 'Product ' . $product->name . ' Berhasil dikeluarkan dari keranjang atau dihapus');
 
                 return response()->json([
-                    'success' => true
+                    'success' => true,
+                    'cart_empty' => empty($cart)
                 ]);
             }
+            return response()->json([
+                'success' => false
+            ]);
     }
 
     public function clearCart()
     {
         Session::forget('cart');
-        return redirect()->route('cart')->with('success', 'Keranjang Berhasil dikosongkan');
+        return redirect()->route('listproduct')->with('success', 'Keranjang Berhasil dikosongkan');
     }
 
     // Checkout

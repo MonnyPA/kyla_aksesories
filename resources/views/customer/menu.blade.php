@@ -9,14 +9,6 @@
                         <div class="row g-3">
                             <div class="col-lg">
                                 <div class="row g-4 justify-content-center">
-
-                                    @if(session('success'))
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            {{ session('success') }}
-                                            <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
-                                        </div>
-                                    @endif
-
                                 {{-- <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>
@@ -147,10 +139,25 @@
                 // return response.json();
                 .then(data => {
                     // console.log('Data:', data);
-                    alert(data.message)
+                    Swal.fire({
+                        icon: data.status,
+                        title: 'Berhasil',
+                        text: data.message,
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
                 })
+
                 .catch((error) => {
-                    console.error('error: ', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Terjadi kesalahan',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+
+                    console.error(error);
                 });
         }
     </script>

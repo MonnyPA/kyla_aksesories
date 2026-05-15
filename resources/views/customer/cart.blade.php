@@ -7,13 +7,6 @@
             <div class="container py-5">
                 <form id="checkout-form" action="{{ route('checkout.store') }}" method="POST">
                     @csrf
-                        @if(session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" arial-label="Close"></button>
-                        </div>
-
-                        @endif
 
                          @if($errors->any())
                             <div class="alert alert-warning alert-dismissible fade show py-2 px-3 small" role="alert">
@@ -90,7 +83,13 @@
                                             <p class="mb-0 mt-4">{{ 'Rp. '. number_format($product['selling_price'] * $product['qty'], 0, '.','.') }}</p>
                                         </td>
                                         <td>
-                                            <button type="button" class="btn btn-md rounded-circle bg-light border mt-3" onclick="if(confirm('Apakah Anda yakin ingin menghapus Product {{ $product['name'] }} ini?')) { removeItemFromCart('{{ $product['id'] }}') }" >
+                                            <button
+                                                type="button"
+                                                class="btn btn-md rounded-circle bg-light border mt-3"
+                                                onclick="confirmRemoveCart(
+                                                    '{{ $product['id'] }}',
+                                                    '{{ $product['name'] }}'
+                                                )">
                                                 <i class="fa fa-times text-danger"></i>
                                             </button>
                                         </td>
@@ -101,7 +100,7 @@
                             </table>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a href="{{ route('cart.clear') }}" class="btn btn-danger" onclick="confirm('Apakah anda yakin ingin mengosongkan keranjang?')">Kosongkan Keranjang</a>
+                            <a href="#" class="btn btn-danger" onclick="clearCart(); return false;">Kosongkan Keranjang</a>
                         </div>
                         <div class="row g-4 justify-content-end mt-1">
                             <div class="col-8"></div>
@@ -215,14 +214,29 @@
                 // console.log('Response:', response);
                 // return response.json();
                 .then(data => {
-                    // console.log('Data:', data); // debug
+
                     if(data.success)
+                    {
+                        // cek apakah cart kosong
+                        if(data.cart_empty)
+                        {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Keranjang Kosong',
+                                text: 'Kembali ke halaman menu',
+                                timer: 1500,
+                                showConfirmButton: false
+                            });
+                            setTimeout(() => {
+                                window.location.href =
+                                    "{{ route('listproduct') }}";
+                            }, 1500);
+                        }
+                        else
                         {
                             location.reload();
-                        } else
-                        {
-                            alert(data.message);
                         }
+                    }
                 })
 
                 .catch((error) => {
