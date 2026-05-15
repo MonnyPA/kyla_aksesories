@@ -1,11 +1,11 @@
 @extends('customer.layouts.master')
-@section('title', 'Daftar Pesanan')
+@section('title', 'Daftar Penjualan')
 
 @section('content')
 
 <div class="container-fluid py-5">
             <div class="container py-5">
-                <h1 class="mb-4">Daftar Pesanan</h1>
+                <h1 class="mb-4">Daftar Penjualan</h1>
                 <section class="section">
                         <div class="card">
                             <div class="card-body">
@@ -25,7 +25,9 @@
                                         <tr>
                                             <td class="text-center align-middle">{{ $loop->iteration }}</td>
                                             <td class="text-center align-middle">{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y') }}</td>
-                                            <td class="text-center align-middle">{{ $order->order_code }}</td>
+                                            <td class="text-center align-middle">
+                                                <a href="{{ route('orders.show', $order->id) }}">{{ $order->order_code }}</a>
+                                            </td>
                                             <td class="text-center align-middle">{{ Str::ucfirst($order->payment_method) }}</td>
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($order->total), 0, ',','.' }}</td>
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($order->profit), 0, ',','.' }}</td>
