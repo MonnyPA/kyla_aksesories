@@ -55,10 +55,10 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        function confirmDelete(id, catName) {
+        function confirmDelete(id, catName, itemType = 'Data') {
             Swal.fire({
                 title: 'Yakin ingin menghapus?',
-                text: 'Category "' + catName + '" akan dihapus!',
+                text: itemType + ' "' + catName + '" akan dihapus!',
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#d33',

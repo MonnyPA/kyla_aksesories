@@ -37,7 +37,7 @@
                                                     @method('DELETE')
                                                     <button type="button"
                                                             class="btn btn-danger btn-sm"
-                                                            onclick="confirmDelete({{ $category->id }},  '{{ $category->cat_name }}')">
+                                                            onclick="confirmDelete({{ $category->id }},  '{{ $category->cat_name }}', 'Category')">
                                                         <i class="bi bi-trash"></i> Delete
                                                     </button>
                                                 </form>

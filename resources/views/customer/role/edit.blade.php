@@ -1,5 +1,5 @@
 @extends('customer.layouts.master')
-@section('title', 'Tambah Role')
+@section('title', 'Edit Role')
 
 @section('content')
 
@@ -11,12 +11,13 @@
                     <div class="col-12">
                         <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title text-warning">Tambah Role</h3>
+                            <h3 class="card-title text-warning">Edit Role</h3>
                         </div>
                         <div class="card-content">
                             <div class="card-body">
-                            <form class="form" action="{{ route('roles.store') }}" method="POST" enctype="multipart/form-data">
+                            <form class="form" action="{{ route('roles.update', $role->id) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                @method('PUT')
 
                                 <div class="row">
                                 <div class="col-md-6 col-12">
@@ -30,6 +31,7 @@
                                         class="form-control mb-2"
                                         placeholder="Nama Role"
                                         name="role_name"
+                                        value="{{ old('role_name', $role->role_name) }}"
                                         required
                                     />
                                     </div>
@@ -45,6 +47,7 @@
                                         class="form-control mb-2"
                                         placeholder="Input Description"
                                         name="description"
+                                        value="{{ old('description', $role->description) }}"
                                         required
                                     />
                                     </div>
