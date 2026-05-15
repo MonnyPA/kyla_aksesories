@@ -55,6 +55,25 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        function confirmDelete(id, catName) {
+            Swal.fire({
+                title: 'Yakin ingin menghapus?',
+                text: 'Category "' + catName + '" akan dihapus!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            });
+        }
+    </script>
+
+    <script>
 
     function confirmRemoveCart(productId, productName)
     {

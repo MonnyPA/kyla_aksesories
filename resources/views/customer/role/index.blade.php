@@ -31,10 +31,9 @@
                                         @foreach ($roles as $role)
                                         <tr>
                                             <td class="text-center align-middle">{{ $loop->iteration }}</td>
-                                            <td class="text-center align-middle">{{ $role->role_name }}</td>
+                                            <td class="text-center align-middle">{{ Str::ucfirst($role->role_name) }}</td>
                                             <td class="text-center align-middle">{{ $role->description }}</td>
                                             <td class="text-center align-middle">
-                                                <a href="#" class="btn btn-info btn-sm"><i class="bi bi-eye"></i> View</a>
                                                 <a href="#" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
                                                 <form action="#" method="POST" class="d-inline">
                                                         @csrf

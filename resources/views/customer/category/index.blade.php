@@ -28,11 +28,18 @@
                                             <td class="text-center align-middle">{{ $category->cat_name }}</td>
                                             <td class="text-center align-middle">{{ $category->description }}</td>
                                             <td class="text-center align-middle">
-                                                <a href="#" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
-                                                <form action="#" method="POST" class="d-inline">
+                                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                                <form id="delete-form-{{ $category->id }}"
+                                                    action="{{ route('categories.destroy', $category->id) }}"
+                                                    method="POST"
+                                                    class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm" onclick=""><i class="bi bi-trash"></i> Delete</button>
+                                                    <button type="button"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="confirmDelete({{ $category->id }},  '{{ $category->cat_name }}')">
+                                                        <i class="bi bi-trash"></i> Delete
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>
