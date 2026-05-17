@@ -262,7 +262,7 @@
 
                     let formData = new FormData(form);
 
-                    if(paymentMethod == 'tunai')
+                    if(paymentMethod == 'tunai' || paymentMethod == 'qris')
                     {
                         form.submit();
                     }

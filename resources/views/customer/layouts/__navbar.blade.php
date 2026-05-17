@@ -7,7 +7,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="#" class="nav-item nav-link">Dashboard</a>
+                            <a href="{{ route('dashboard') }}" class="nav-item nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">Dashboard</a>
                             <a href="{{ route('listproduct') }}" class="nav-item nav-link {{ request()->routeIs('listproduct') ? 'active' : '' }}">Penjualan Product</a>
                             <a href="{{ route('orders.index') }}" class="nav-item nav-link {{ request()->routeIs('orders.*') ? 'active' : '' }}">Daftar Penjualan</a>
                             <a href="{{ route('products.index') }}" class="nav-item nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}">Kelola Product</a>

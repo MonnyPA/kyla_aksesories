@@ -29,10 +29,14 @@
         <!-- Template Stylesheet -->
         <link href="{{ asset('assets/customer/css/style.css') }}" rel="stylesheet">
 
-        <link
-            rel="stylesheet"
-            href="{{ asset('assets/customer/assets/extensions/simple-datatables/style.css') }}"
-        />
+        <!-- Icon Font Stylesheet -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        <link rel="stylesheet" crossorigin href="{{ asset('assets/customer/assets/compiled/css/iconly.css') }}">
+
+        <link rel="stylesheet" href="{{ asset('assets/customer/assets/extensions/simple-datatables/style.css') }}"/>
+        {{-- <link rel="stylesheet" crossorigin href="{{ asset('assets/customer/assets/compiled/css/app.css') }}"> --}}
+        <link rel="stylesheet" crossorigin href="{{ asset('assets/customer/assets/compiled/css/app-dark.css') }}">
 
         <link
             rel="stylesheet"

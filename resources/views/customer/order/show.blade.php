@@ -22,15 +22,15 @@
                                     </div>
                                     <div class="col-md-4">
                                         <p>: <b>{{ \Carbon\Carbon::parse($order->created_at)->format('d M Y // H:s') }}</b></p>
-                                        <p>: {{ 'Rp. '. number_format($order->total), 0, ',','.' }}</p>
+                                        <p>: <b>{{ 'Rp. '. number_format($order->total), 0, ',','.' }}</b></p>
                                     </div>
                                     <div class="col-md-2">
                                         <p>Total Profit</p>
                                         <p>Metode Pembayaran</p>
                                     </div>
                                     <div class="col-md-4">
-                                        <p>: {{ 'Rp. '. number_format($order->profit), 0, ',','.' }}</p>
-                                        <p>: {{ Str::ucfirst($order->payment_method) }}</p>
+                                        <p class="">: <b>{{ 'Rp. '. number_format($order->profit), 0, ',','.' }}</b></p>
+                                        <p>: <b>{{ Str::ucfirst($order->payment_method) }}</b></p>
                                     </div>
                                 <div class="row">
                                 <div class="col-12 d-flex justify-content-end">

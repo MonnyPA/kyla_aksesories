@@ -7,6 +7,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 //Route Customer
 
@@ -37,3 +38,10 @@ Route::resource('categories', CategoryController::class);
 Route::resource('roles', RoleController::class);
 
 Route::resource('users', UserController::class);
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::get('/dashboard/daily-orders', [DashboardController::class, 'dailyOrders']);
+Route::get('/dashboard/daily-revenue', [DashboardController::class, 'dailyRevenue']);
+Route::get('/dashboard/top-products', [DashboardController::class, 'dashboard'])->name('topProducts');
+// Route::get('/dashboard/top-products', [DashboardController::class, 'topProducts']);
