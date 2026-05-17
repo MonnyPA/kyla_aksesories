@@ -8,7 +8,7 @@
                 <form id="checkout-form" action="{{ route('checkout.store') }}" method="POST">
                     @csrf
 
-                         @if($errors->any())
+                        @if($errors->any())
                             <div class="alert alert-warning alert-dismissible fade show py-2 px-3 small" role="alert">
                                 <div class="d-flex align-items-center mb-2">
                                     <h5 class="mb-0">Oops! Terjadi kesalahan</h5>
@@ -139,7 +139,7 @@
 
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button id="pay-button" type="button" class="btn border-secondary py-3 text-uppercase text-primary">Simpan Transaksi</button>
+                                    <button id="pay-button" type="submit" class="btn border-secondary py-3 text-uppercase text-primary">Simpan Transaksi</button>
                                 </div>
                             </div>
                         </div>
@@ -245,28 +245,28 @@
                 });
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-                const payButton = document.getElementById('pay-button');
-                const form = document.querySelector('form');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //         const payButton = document.getElementById('pay-button');
+        //         const form = document.querySelector('checkout-form');
 
 
-                payButton.addEventListener('click', function() {
-                    let paymentMethod = document.querySelector('input[name="payment_method"]:checked');
+        //         payButton.addEventListener('click', function() {
+        //             let paymentMethod = document.querySelector('input[name="payment_method"]:checked');
 
-                    if (!paymentMethod) {
-                        alert('Silakan pilih metode pembayaran terlebih dahulu.');
-                        return;
-                    }
+        //             if (!paymentMethod) {
+        //                 alert('Silakan pilih metode pembayaran terlebih dahulu.');
+        //                 return;
+        //             }
 
-                    paymentMethod = paymentMethod.value;
+        //             paymentMethod = paymentMethod.value;
 
-                    let formData = new FormData(form);
+        //             let formData = new FormData(form);
 
-                    if(paymentMethod == 'tunai' || paymentMethod == 'qris')
-                    {
-                        form.submit();
-                    }
-                });
-            });
+        //             if(paymentMethod == 'tunai' || paymentMethod == 'qris')
+        //             {
+        //                 form.submit();
+        //             }
+        //         });
+        //     });
     </script>
 @endsection

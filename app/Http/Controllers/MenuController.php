@@ -147,26 +147,25 @@ class MenuController extends Controller
         return redirect()->route('listproduct')->with('success', 'Keranjang Berhasil dikosongkan');
     }
 
-    // Checkout
-    public function checkout()
-    {
-        $cart = Session::get('cart');
+    // // Checkout
+    // public function checkout()
+    // {
+    //     $cart = Session::get('cart');
 
-        if(empty($cart))
-            {
-                return redirect()->route('cart')->with('error', 'Keranjang Masih Kosong');
-            }
+    //     if(empty($cart))
+    //         {
+    //             return redirect()->route('cart')->with('error', 'Keranjang Masih Kosong');
+    //         }
 
-        $user = Auth::user();
+    //     $user = Auth::user();
 
-        return view('customer.checkout', compact('cart','user'));
-    }
+    //     return view('customer.checkout', compact('cart','user'));
+    // }
 
     // Checkout
     public function storeOrder(Request $request)
     {
         $cart = Session::get('cart');
-        // $user = Session::get('user');
 
         if(empty($cart))
             {
@@ -188,8 +187,6 @@ class MenuController extends Controller
                     'name' => substr($product['name'], 0, 50)
                 ];
             }
-
-        $user = Auth::user();
 
         $order = Order::create([
             'order_code' => 'TRK-' . date('dmY') . '-' . time(),

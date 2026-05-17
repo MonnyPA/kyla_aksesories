@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  Closure(Request): (Response)  $next
-     */
     public function handle(Request $request, Closure $next, string $role): Response
     {
 
@@ -23,6 +18,8 @@ class RoleMiddleware
             }
 
         $roles = explode('|', $role);
+
+
         if(!in_array(Auth::user()->role->role_name, $roles))
             {
                 abort(403, 'Unauthorized Action.');

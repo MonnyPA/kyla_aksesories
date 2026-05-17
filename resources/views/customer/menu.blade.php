@@ -92,7 +92,9 @@
                                                 <p class="text-limited">{{ $product->description }}</p>
                                                 <div class="d-flex justify-content-between flex-lg-wrap">
                                                     <p class="text-dark fs-5 fw-bold mb-0">{{ 'Rp. '. number_format($product->selling_price), 0, ',','.' }}</p>
+                                                    @if(Auth::user()->role->role_name == 'cashier_osm' || Auth::user()->role->role_name == 'cashier_kd' )
                                                     <a href="#" onclick="addToCart({{ $product->id }})" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Tambah Keranjang</a>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
