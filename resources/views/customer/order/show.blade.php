@@ -25,11 +25,15 @@
                                         <p>: <b>{{ 'Rp. '. number_format($order->total), 0, ',','.' }}</b></p>
                                     </div>
                                     <div class="col-md-2">
+                                        @if(Auth::user()->role->role_name == 'owner')
                                         <p>Total Profit</p>
+                                        @endif
                                         <p>Metode Pembayaran</p>
                                     </div>
                                     <div class="col-md-4">
+                                        @if(Auth::user()->role->role_name == 'owner')
                                         <p class="">: <b>{{ 'Rp. '. number_format($order->profit), 0, ',','.' }}</b></p>
+                                        @endif
                                         <p>: <b>{{ Str::ucfirst($order->payment_method) }}</b></p>
                                     </div>
                                 <div class="row">
@@ -60,7 +64,9 @@
                                             <th class="text-center">Gambar <br>Product</th>
                                             <th class="text-center">Nama Product</th>
                                             <th class="text-center">Jumlah</th>
+                                            @if(Auth::user()->role->role_name == 'owner')
                                             <th class="text-center">Harga Modal</th>
+                                            @endif
                                             <th class="text-center">Harga Jual</th>
                                             <th class="text-center">Total Harga</th>
                                         </tr>
@@ -75,7 +81,9 @@
                                             </td>
                                             <td class="text-center align-middle">{{ $item->product->name }}</td>
                                             <td class="text-center align-middle">{{ $item->quantity }}</td>
+                                            @if(Auth::user()->role->role_name == 'owner')
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($item->product->cost_price), 0, ',','.' }}</td>
+                                            @endif
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($item->product->selling_price), 0, ',','.' }}</td>
                                             <td class="text-center align-middle">{{ 'Rp. '. number_format($item->total_price), 0, ',','.' }}</td>
                                         </tr>

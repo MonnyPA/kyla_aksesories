@@ -115,9 +115,91 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-xl-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="text-warning">Rekapan Penjualan Harian</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-lg">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Toko</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($dailyRevenueByToko as $toko)
+                                                        <tr>
+                                                            <td>{{ $toko->user?->fullname }}</td>
+                                                            <td>{{ 'Rp. '. number_format($toko->total_revenue), 0, ',','.' }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-12 mb-3">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="text-warning">Rekapan Penjualan Mingguan</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-lg">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Toko</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($weeklyRevenueByToko as $toko)
+                                                        <tr>
+                                                            <td>{{ $toko->user?->fullname }}</td>
+                                                            <td>{{ 'Rp. '. number_format($toko->total_revenue), 0, ',','.' }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="text-warning">Rekapan Penjualan Bulanan</h4>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-hover table-lg">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nama Toko</th>
+                                                            <th>Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @foreach($monthlyRevenueByToko as $toko)
+                                                        <tr>
+                                                            <td>{{ $toko->user?->fullname }}</td>
+                                                            <td>{{ 'Rp. '. number_format($toko->total_revenue), 0, ',','.' }}</td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         @endif
+
                         @if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'cashier_osm' || Auth::user()->role->role_name == 'cashier_kd' )
                         <div class="col-12 col-lg-3">
                             <div class="col">
@@ -132,7 +214,7 @@
                                                 </div>
                                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                     <h6 class="text-muted font-semibold">Penjualan Today</h6>
-                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($todayRevenue), 0, ',','.' }}</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($todayRevenueByUser), 0, ',','.' }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,7 +231,7 @@
                                                 </div>
                                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                     <h6 class="text-muted font-semibold">Penjualan Weekly</h6>
-                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($weeklyRevenue), 0, ',','.' }}</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($weeklyRevenueByUser), 0, ',','.' }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -166,7 +248,7 @@
                                                 </div>
                                                 <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
                                                     <h6 class="text-muted font-semibold">Penjualan Monthly</h6>
-                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($monthlyRevenue), 0, ',','.' }}</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($monthlyRevenueByUser), 0, ',','.' }}</h6>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,6 +284,7 @@
                                                             <th>No</th>
                                                             <th>Tanggal Transaksi</th>
                                                             <th>Kode Transaksi</th>
+                                                            <th>Lokasi</th>
                                                             <th>Total</th>
                                                         </tr>
                                                     </thead>
@@ -213,6 +296,7 @@
                                                             <td>
                                                                 <a href="{{ route('orders.show', $order->id) }}">{{ $order->order_code }}</a>
                                                             </td>
+                                                            <td>{{ $order->user?->fullname ?? '-' }}</td>
                                                             <td>{{ 'Rp. '. number_format($order->total), 0, ',','.' }}</td>
                                                         </tr>
                                                         @endforeach
@@ -223,6 +307,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @if(Auth::user()->role->role_name == 'owner' || Auth::user()->role->role_name == 'admin')
                             <div class="row">
                                 <div class="col-6 col-xl-6">
                                     <div class="card">
@@ -256,7 +341,7 @@
                                 <div class="col-6 col-xl-6">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h4 class="text-warning">Product Stock Hampir Habis</h4>
+                                            <h4 class="text-warning">Product Stock Need..</h4>
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
@@ -283,6 +368,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </section>
                 </div>
