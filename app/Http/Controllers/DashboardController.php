@@ -176,21 +176,47 @@ class DashboardController extends Controller
 
     public function dailyOrders()
     {
-        $orders = Order::select(
-                DB::raw('DATE(created_at) as date'),
-                DB::raw('SUM(total) as total')
-            )
+        $user = Auth::user();
+
+        $restrictedRoles = ['cashier_kd', 'cashier_osm'];
+
+        $query = Order::query();
+
+        // Jika cashier, tampilkan hanya order miliknya
+        if (in_array($user->role->role_name, $restrictedRoles)) {
+
+            $query->where('user_id', $user->id);
+        }
+
+        $orders = $query
+            ->selectRaw('DATE(created_at) as date, SUM(total) as total')
             ->groupBy('date')
             ->orderBy('date', 'ASC')
-            ->limit(5)
             ->get();
 
         return response()->json([
-            'labels' => $orders->pluck('date')->map(function($date) {
-                return Carbon::parse($date)->format('d-M-Y');
-            }),
+            'labels' => $orders->pluck('date')
+                ->map(fn($date) => \Carbon\Carbon::parse($date)->format('d M')),
+
             'data' => $orders->pluck('total')
         ]);
+
+
+        // $orders = Order::select(
+        //         DB::raw('DATE(created_at) as date'),
+        //         DB::raw('SUM(total) as total')
+        //     )
+        //     ->groupBy('date')
+        //     ->orderBy('date', 'ASC')
+        //     ->limit(5)
+        //     ->get();
+
+        // return response()->json([
+        //     'labels' => $orders->pluck('date')->map(function($date) {
+        //         return Carbon::parse($date)->format('d-M-Y');
+        //     }),
+        //     'data' => $orders->pluck('total')
+        // ]);
     }
 
     public function dailyRevenue()
