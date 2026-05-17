@@ -5,11 +5,12 @@
 <div class="container-fluid py-5">
             <div class="container py-5">
                 <div class="page-heading">
-                    <h3 class="">Selamat Datang</h3>
+                    <h3 class="">Selamat Datang, <span class="text-warning">{{ Str::ucfirst(auth()->user()?->role?->role_name) }}</span> || <i class="text-success">{{ auth()->user()?->fullname }}</i></h3></h3>
                 </div>
                 <br>
                 <div class="page-content">
                     <section class="row">
+                        @if(Auth::user()->role->role_name == 'owner')
                         <div class="col-12 col-lg-3">
                             <div class="col">
                                 <div class="col-6 col-lg-12 col-md-6 mb-3">
@@ -116,6 +117,64 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+                        @if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'cashier_osm' || Auth::user()->role->role_name == 'cashier_kd' )
+                        <div class="col-12 col-lg-3">
+                            <div class="col">
+                                <div class="col-6 col-lg-12 col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                                    <div class="stats-icon purple mb-2">
+                                                        <i class="iconly-boldChart fs-1"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                    <h6 class="text-muted font-semibold">Penjualan Today</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($todayRevenue), 0, ',','.' }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-12 col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                                    <div class="stats-icon green mb-2">
+                                                        <i class="iconly-boldChart fs-1"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                    <h6 class="text-muted font-semibold">Penjualan Weekly</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($weeklyRevenue), 0, ',','.' }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-12 col-md-6 mb-3">
+                                    <div class="card">
+                                        <div class="card-body px-4 py-4-5">
+                                            <div class="row">
+                                                <div class="col-md-4 col-lg-12 col-xl-12 col-xxl-5 d-flex justify-content-start ">
+                                                    <div class="stats-icon red mb-2">
+                                                        <i class="iconly-boldChart fs-1"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8 col-lg-12 col-xl-12 col-xxl-7">
+                                                    <h6 class="text-muted font-semibold">Penjualan Monthly</h6>
+                                                    <h6 class="font-extrabold mb-0 text-info">{{ 'Rp. '. number_format($monthlyRevenue), 0, ',','.' }}</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="col-12 col-lg-9">
                             <div class="row mb-3">
                                 <div class="col-12">

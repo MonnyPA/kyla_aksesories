@@ -31,7 +31,7 @@
                                         <tr>
                                             <td class="text-center align-middle">{{ $loop->iteration }}</td>
                                             <td class="text-center align-middle">
-                                                <img src="{{ asset('img_product_upload/' . $product->img) }}" alt="{{ $product->name }}" class="img-thumbnail mb-2" style="width: 100px; height: 100px;" onerror="this.onerror=null;this.src='{{ $product->img }}';">
+                                                <img src="{{ asset('img_product_upload/' . $product->img) }}" alt="{{ $product->name }}" class="img-thumbnail mb-2" style="width: 60px; height: 60px;" onerror="this.onerror=null;this.src='{{ $product->img }}';">
                                             </td>
                                             <td class="text-center align-middle">{{ $product->category->cat_name }}</td>
                                             <td class="text-center align-middle">{{ $product->name }}</td>
@@ -57,7 +57,12 @@
                                                 </span>
                                             </td>
                                             <td class="text-center align-middle">
-                                                <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-eye"></i> View</a>
+                                                <div class="d-flex flex-wrap justify-content-center gap-1">
+                                                <a href="{{ route('products.show', $product->id) }}"
+                                                    class="btn btn-warning btn-sm">
+                                                        <i class="bi bi-eye"></i>
+                                                        <span class="d-none d-xl-inline">View</span>
+                                                </a>
                                                 {{-- @if(Auth::user()->role->role_name == 'admin' || Auth::user()->role->role_name == 'direktur' || Auth::user()->role->role_name == 'owner' || Auth::user()->role->role_name == 'manager') --}}
                                                 @if ($product->is_active)
                                                     <a href="#"
@@ -67,7 +72,7 @@
                                                                 '{{ $product->name }}'
                                                         )">
                                                             <i class="bi bi-x-circle"></i>
-                                                            Non Active
+                                                            <span class="d-none d-xl-inline">Non Active</span>
                                                     </a>
                                                 @else
                                                     <a href="#"
@@ -77,11 +82,14 @@
                                                                 '{{ $product->name }}'
                                                         )">
                                                             <i class="bi bi-x-circle"></i>
-                                                            Active
+                                                            <span class="d-none d-xl-inline">Active</span>
                                                     </a>
                                                 @endif
-                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i> Edit</a>
+                                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm"><i class="bi bi-pencil-square"></i>
+                                                    <span class="d-none d-xl-inline">Edit</span>
+                                                </a>
                                                 {{-- @endif --}}
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
