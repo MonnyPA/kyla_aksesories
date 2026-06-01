@@ -8,7 +8,7 @@
                 <h1 class="mb-4">Daftar Penjualan</h1>
                 <section class="section">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body table-responsive">
                                 <table class="table table-striped" id="table1">
                                     <thead>
                                         <tr>

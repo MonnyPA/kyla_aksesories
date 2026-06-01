@@ -87,7 +87,7 @@
                                         class="form-control mb-2"
                                         placeholder="Inset Gambar Product"
                                         name="img"
-                                        required
+
                                     />
                                     </div>
                                 </div>
@@ -145,7 +145,8 @@
                                 </div>
                                 <div class="row">
                                 <div class="col-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success">Submit</button>
+                                    <button type="submit" class="btn btn-success" name="action" value="save_and_new">Save & Add New</button>
+                                    <button type="submit" class="btn btn-warning ms-2" name="action" value="save">Save</button>
                                     <a href="{{ route('products.index') }}" class="btn btn-danger ms-2">Cancel</a>
                                 </div>
                                 </div>

@@ -29,7 +29,7 @@ class ProductController extends Controller
             'selling_price' => 'required|numeric|min:0',
             'stock' => 'required|numeric|min:0',
             'category_id' => 'required|exists:categories,id',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'img' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_active' => 'required|boolean'
         ],
         [
@@ -58,7 +58,23 @@ class ProductController extends Controller
 
         Product::create($validate);
 
-        return redirect()->route('products.index')->with('success', 'Product : ' . $validate['name'] . ', created successfully.');
+        // Jika klik Save & Add New
+        if ($request->action === 'save_and_new') {
+            return redirect()
+                ->route('products.create')
+                ->with(
+                    'success',
+                    'Product : ' . $validate['name'] . ' created successfully.'
+                );
+        }
+
+        // Jika klik Save
+        return redirect()
+            ->route('products.index')
+            ->with(
+                'success',
+                'Product : ' . $validate['name'] . ' created successfully.'
+            );
     }
 
     public function edit(string $id)
